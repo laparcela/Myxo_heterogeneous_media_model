@@ -1,0 +1,19 @@
+Area = Particle area
+Cell = Number of aggregate cells
+Densidad = Category name of density particle (Curva_nu.txt; Curva_ta.txt)
+Error = Standard error
+MCS = Monte-Carlo Step
+Neigh = Proportion of aggregate cells
+Nombre = Name of Particle condition
+Numero_ag = Number of aggregates
+Parametro = Value of parameter 
+Particula = Particle condition (size x 1/density)
+Replica = Replica
+Tamaño = Size of total aggregates (Distribution.txt)
+Tamaño = Category name of size particle (Curva_nu.txt; Curva_ta.txt)
+Tamaño_ag = Mean of the 5 biggest aggregates
+Tipo = Type of Size : Mean (Promedio) or Maximum (Maximo)
+Valor = Value
+Variable = Variable
+
+
