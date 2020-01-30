@@ -1,0 +1,71 @@
+# To create PIF files of the Particles conditions in Python
+
+import numpy as np
+
+# Particle condition: size = 6; density = 1/6  
+t = (6-1)     #Size
+d =  6        #Density
+td = 6+6      #Size + Density
+o =  25       #No. particles by row
+o2 = 625      #No. total particles
+
+#Create a list
+no= list(range(0,o2, 1))        #Enumerate cells
+tipo =["Medium2"]               #Cellular type
+ox1= list(range(0,300, td))    #coordinate x1
+ox2= list(range(t,300, td))    #coordinate x2 
+oy1= list(range(0,300, td))    #coordinate y1
+oy2= list(range(t,300, td))    #coordinate y2
+oz1= [0]                       #coordinate z1
+oz2= [0]                       #coordinate z2
+
+# Size of the list 
+print(len(ox1))
+print(len(ox2))
+print(len(oy1))
+print(len(oy2))
+
+#Remove surplus coordinates; N= No. particles
+# =============================================================================
+# ox1.pop(-1)
+# =============================================================================
+# =============================================================================
+# ox2.pop(-1)
+# =============================================================================
+# =============================================================================
+# oy1.pop(-1)
+# =============================================================================
+# =============================================================================
+# oy2.pop(-1)
+# =============================================================================
+
+# Size of the list
+print(len(ox1))
+print(len(ox2))
+print(len(oy1))
+print(len(oy2))
+
+#Mutliply by no. of particles
+TIPO = tipo* o2
+Ox1= ox1* o
+Ox2= ox2* o
+Oy1= oy1* o
+Oy1.sort()
+Oy2= oy2* o
+Oy2.sort()
+Oz1= oz1* o2
+Oz2 =oz2* o2
+
+mO= np.array([no,TIPO,Ox1,Ox2,Oy1,Oy2,Oz1,Oz2])  #Create matrix
+MO=np.transpose(mO)          #Exchange rows and columns
+
+print(len(MO))     #Size matrix
+
+
+#Show matrix
+a="" 
+for k in range(o2):
+    for j in range(8):
+        a+=str(MO[k][j])+' '
+    print (a)
+    a=""

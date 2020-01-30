@@ -1,0 +1,60 @@
+import os
+import numpy
+import networkx as nx
+import re
+import math
+
+# This functions calculates the number of aggregates at each MCS.
+def number_of_aggregates(input_file):
+    print ("MCS" + "\t" + "AggrCnt")
+    f = open(input_file, "r")
+    
+    for line in f:
+        if line.count("id") == 1:
+            ids = re.split("\t", line.rstrip())[3]
+            ids = re.split(" ", ids)[1:]
+            cell_conn = nx.Graph()
+            cell_conn.add_nodes_from(ids)
+        if line.count("CELL_NEIGHBORS") == 1:
+            pairs = re.split("\t", line.rstrip())[3]
+            pairs = re.split(" ", pairs)[1:]
+            for pair in pairs:
+                nodes = re.split("-", pair)
+                cell_conn.add_edge(nodes[0], nodes[1])
+            for component in list(nx.connected_components(cell_conn)):
+                if len (component) <2:
+                    for node in component:
+                        cell_conn.remove_node(node)            
+            aggrNumber = nx.number_connected_components(cell_conn)
+            mcs = re.split("\t", line)[0][3:]
+            print (str(mcs) + "\t" + str(aggrNumber))
+
+# This functions calculates the size for each aggregate exisitng at each MCS.
+def aggregate_size(input_file):
+    print ("MCS" + "\t" + "Size")
+    f = open(input_file, "r")
+    for line in f:
+        if line.count("id") == 1:
+            ids = re.split("\t", line.rstrip())[3]
+            ids = re.split(" ", ids)[1:]
+            cell_conn = nx.Graph()
+            cell_conn.add_nodes_from(ids)
+        if line.count("CELL_NEIGHBORS") == 1:
+            mcs = re.split("\t", line)[0][3:]
+            pairs = re.split("\t", line.rstrip())[3]
+            pairs = re.split(" ", pairs)[1:]
+            for pair in pairs:
+                nodes = re.split("-", pair)
+                cell_conn.add_edge(nodes[0], nodes[1])
+            for component in list(nx.connected_components(cell_conn)):
+                if len (component) <2:
+                    for node in component:
+                        cell_conn.remove_node(node) 
+            for c in nx.connected_component_subgraphs(cell_conn):
+                size = len(nx.nodes(c))
+                t = open('tamaño2.txt','a')
+                t.write (str(mcs) + "\t" + str(size) + "\n")
+                t.close()           
+                
+aggregate_size ("output_data_4_1566537052.89.txt")
+number_of_aggregates("output_data_4_1566537052.89.txt")

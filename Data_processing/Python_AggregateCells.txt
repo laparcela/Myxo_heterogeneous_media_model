@@ -1,0 +1,15 @@
+# To obtain the proportion of aggregate cells in Python
+
+f = open ('Output1600.txt','r')  #Open the file for read
+wordstring = f.read()
+
+wordlist = wordstring.split()
+
+wordfreq = []
+for w in wordlist:
+    wordfreq.append(wordlist.count(w))
+
+# To count the number of "2L:", which indicate that a cell has a neighbour
+a = ("List\n" + str(wordlist) + "\n")
+veces = a.count('2L:')
+print(veces)
