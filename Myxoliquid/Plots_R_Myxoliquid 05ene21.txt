@@ -1,0 +1,44 @@
+# Edna Rodríguez Sánchez 
+# 05 January 2021        
+# Myxobacteria          
+
+#install.packages("ggplot2") 
+library("ggplot2")
+
+      # M y x o    l i q u i d o 
+
+ # Barplot
+agg<-read.table("Myxoliquid.txt",header=T)
+agg <- filter(agg, Particle_density=="1" | Particle_density=="5" | Particle_density=="15" | Particle_density=="25")
+agg$Particle_density <- factor(agg$Particle_density)
+agg$Cellular_density <- factor(agg$Cellular_density)
+
+Agg_no<-(agg$Agg_no/19.8)
+agg$Agg_no = Agg_no
+Agg_size<-(agg$Agg_size/20.4)
+agg$Agg_size = Agg_size
+Agg_agg<-(agg$Agg_agg/155.3)
+agg$Agg_agg = Agg_agg
+Agg_no_sd<-(agg$Agg_no_sd/19.8)
+agg$Agg_no_sd = Agg_no_sd
+Agg_size_sd<-(agg$Agg_size_sd/20.4)
+agg$Agg_size_sd = Agg_size_sd
+Agg_agg_sd<-(agg$Agg_agg_sd/155.3)
+agg$Agg_agg_sd = Agg_agg_sd
+
+c<-ggplot(agg,aes(Particle_density, Agg_agg, fill= Particle_attraction)) + 
+        geom_bar(width = 0.4, stat = "identity", position=position_dodge(width=0.5)) +
+        geom_errorbar(aes(ymax= Agg_agg+Agg_agg_sd, ymin= Agg_agg-Agg_agg_sd), width= 0.2, position =position_dodge(.5)) +
+        scale_y_continuous(breaks = c(0,.2,.4,.6,.8,1.0,1.2)) + 
+        xlab("Particle density (%)") + ylab ("Total number of aggregated cells") +
+        guides(fill = guide_legend(title = "Particle attraction")) +       
+        scale_fill_manual(values = c("gray40","lightcyan3"),
+                             labels = c("No","Yes")) +
+        theme(panel.background = element_blank(), panel.border=element_rect(fill=NA,size=.5),
+        axis.title.x = element_text(size=10),
+        axis.title.y = element_text(size=10),
+        axis.text.x = element_text(size=8),
+        axis.text.y = element_text(size=8),
+        legend.position="bottom",legend.text=element_text(size=8), 
+        legend.key = element_blank(), legend.title = element_text(size=8))
+c
